@@ -1,4 +1,4 @@
-# book-kubernetesadmin
+# book-kubernetesadmin Tips
 
 ## Metal LB 
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
@@ -12,3 +12,6 @@ kubectl create ingress hello --rule="hello.brainupgrade.in/?(.*)=hello:80" --cla
 
 ## How to find out eth0 address of current host
 ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1
+
+## How to setup vhost on nginx
+sudo wget https://raw.githubusercontent.com/brainupgrade-in/book-kubernetesadmin/main/chapter_04/kubernetes.conf -O /etc/nginx/sites-available/kubernetes.conf
