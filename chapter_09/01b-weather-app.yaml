@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: weather
-        image: brainupgrade/configmap:2
+        image: brainupgrade/configmap:3
         ports:
         - containerPort: 8000
         env:
@@ -33,3 +33,4 @@ spec:
               configMapKeyRef:
                 name: weather-config
                 key: API_URL_GEOCODING
+
