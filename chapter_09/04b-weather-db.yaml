@@ -18,9 +18,6 @@ spec:
         image: bitnami/mongodb:latest
         ports:
         - containerPort: 27017
-        volumeMounts:
-        - name: mongodb-data
-          mountPath: /data/db        
         env:
         - name: MONGODB_USERNAME
           valueFrom:
@@ -42,6 +39,9 @@ spec:
             secretKeyRef:
               name: weather-secret
               key: db_name
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db        
   volumeClaimTemplates:
   - metadata:
       name: mongodb-data
