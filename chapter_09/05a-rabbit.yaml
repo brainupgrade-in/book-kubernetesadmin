@@ -16,13 +16,6 @@ spec:
         - name: rabbit
           image: rabbitmq:3
           imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5672
-          env:
-          - name: RABBIMQ_DEFAUT_USERNAME
-            value: guest
-          - name: RABBITMQ_DEFAULT_PASSWORD
-            value: guest  
           startupProbe:
             tcpSocket:
               port: 5672
@@ -44,6 +37,13 @@ spec:
             periodSeconds: 60
             failureThreshold: 3
             successThreshold: 1
+          ports:
+            - containerPort: 5672
+          env:
+          - name: RABBIMQ_DEFAUT_USERNAME
+            value: guest
+          - name: RABBITMQ_DEFAULT_PASSWORD
+            value: guest  
 ---
 apiVersion: v1
 kind: Service
