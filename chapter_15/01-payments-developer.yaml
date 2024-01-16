@@ -3,7 +3,7 @@ kind: CertificateSigningRequest
 metadata:
   name: payments-developer
 spec:
-  request: $(cat payments-developer.csr | base64 | tr -d '\n')
+  request: PLACEHOLDER
   signerName: kubernetes.io/kube-apiserver-client
   usages:
   - client auth
