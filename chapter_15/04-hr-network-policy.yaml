@@ -11,5 +11,4 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: payroll
-
+          kubernetes.io/metadata.name: payroll
