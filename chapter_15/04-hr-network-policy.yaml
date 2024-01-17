@@ -12,3 +12,4 @@ spec:
     - namespaceSelector:
         matchLabels:
           name: payroll
+
