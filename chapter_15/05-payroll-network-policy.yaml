@@ -6,10 +6,16 @@ metadata:
 spec:
   podSelector: {}
   policyTypes:
-  - Egress
-  - Ingress
+    - Egress
+    - Ingress
   egress:
-  - to:
-    - namespaceSelector:
-        matchLabels:
-          kubernetes.io/metadata.name: hr
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: hr
+      ports:
+      - protocol: TCP
+        port: 8080
+    - ports:
+      - protocol: UDP
+        port: 53
