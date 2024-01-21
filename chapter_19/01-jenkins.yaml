@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jenkins
+  namespace: jenkins
 spec:
   type: NodePort
   selector:
@@ -21,6 +22,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: jenkins
+  namespace: jenkins
 spec:
   serviceName: "jenkins"
   replicas: 1
