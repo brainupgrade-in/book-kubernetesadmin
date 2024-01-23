@@ -84,13 +84,23 @@ data:
   output-elasticsearch.conf: |
     [OUTPUT]
         Name            es
-        Match           *
+        Match           kube.*
         Host            ${FLUENT_ELASTICSEARCH_HOST}
         Port            ${FLUENT_ELASTICSEARCH_PORT}
         Logstash_Format On
         Replace_Dots    On
         Suppress_Type_Name On
         Retry_Limit     False
+    [OUTPUT]
+        Name            es
+        Match           host.*
+        Host            ${FLUENT_ELASTICSEARCH_HOST}
+        Port            ${FLUENT_ELASTICSEARCH_PORT}
+        Logstash_Format On
+        Logstash_Prefix node
+        Replace_Dots    On
+        Suppress_Type_Name On
+        Retry_Limit     False        
     [OUTPUT]
         Name  prometheus_exporter
         Match *
@@ -184,7 +194,7 @@ spec:
             - containerPort: 2020
           env:
           - name: FLUENT_ELASTICSEARCH_HOST
-            value: "es-elasticsearch-master-hl.elasticsearch.svc"
+            value: "es-elasticsearch-master-hl.elasticsearch.svc  "
           - name: FLUENT_ELASTICSEARCH_PORT
             value: "9200"
       terminationGracePeriodSeconds: 10
