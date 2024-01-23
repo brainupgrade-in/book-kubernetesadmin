@@ -58,24 +58,11 @@ data:
         HTTP_Server   On
         HTTP_Listen   0.0.0.0
         HTTP_Port     2020
-    @INCLUDE prometheus.conf
     @INCLUDE input-kubernetes.conf
+    @INCLUDE input-prometheus.conf
     @INCLUDE filter-kubernetes.conf
     @INCLUDE output-elasticsearch.conf
-  prometheus.conf: |
-    [INPUT]
-        name            node_exporter_metrics
-        tag             node_metrics
-        scrape_interval 2
-
-    [OUTPUT]
-        name            prometheus_exporter
-        match           node_metrics
-        host            0.0.0.0
-        port            2021
-        # add user-defined labels
-        add_label       app fluent-bit
-        add_label       color blue    
+    @INCLUDE output-prometheus.conf
   input-kubernetes.conf: |
     [INPUT]
         Name              tail
@@ -86,6 +73,11 @@ data:
         Mem_Buf_Limit     5MB
         Skip_Long_Lines   On
         Refresh_Interval  10
+  input-prometheus.conf: |
+    [INPUT]
+        name            node_exporter_metrics
+        tag             node_metrics
+        scrape_interval 2
   filter-kubernetes.conf: |
     [FILTER]
         Name                kubernetes
@@ -96,8 +88,8 @@ data:
         Kube_Tag_Prefix     kube.var.log.containers.*
         Merge_Log           On
         Merge_Log_Key       log_processed
-        Use_Kubelet         true
-        Kubelet_Port        10250
+        # Use_Kubelet         true
+        # Kubelet_Port        10250
         K8S-Logging.Parser  On
         K8S-Logging.Exclude Off
   output-elasticsearch.conf: |
@@ -120,6 +112,15 @@ data:
         Replace_Dots    On
         Suppress_Type_Name On
         Retry_Limit     False                
+  output-prometheus.conf: |
+    [OUTPUT]
+        name            prometheus_exporter
+        match           node_metrics
+        host            0.0.0.0
+        port            2021
+        # add user-defined labels
+        add_label       app fluent-bit
+        add_label       color blue    
   parsers.conf: |
     [PARSER]
         Name   apache
@@ -155,7 +156,6 @@ data:
         Time_Format %Y-%m-%dT%H:%M:%S.%L
         Time_Keep   On
     [PARSER]
-        # http://rubular.com/r/tjUt3Awgg4
         Name cri
         Format regex
         Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$

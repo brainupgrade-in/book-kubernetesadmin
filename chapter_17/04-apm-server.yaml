@@ -69,6 +69,13 @@ spec:
       containers:
       - name: apm-server
         image: docker.elastic.co/apm/apm-server:7.5.0
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: 100m
+          requests:
+            cpu: 100m
+            memory: 256Mi        
         # env:
         # - name: output.elasticsearch.username
         #   value: "elastic"
